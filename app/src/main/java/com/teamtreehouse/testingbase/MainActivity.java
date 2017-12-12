@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
     }
 
     // the following classes should NEVER be called by MainActivity
+    // the are accessed & called by the MainActivityPresenter class
+    // MainActivityView then updates items in the view
     @Override
     public void changeTextViewText(String text) {
         textView.setText(text);
