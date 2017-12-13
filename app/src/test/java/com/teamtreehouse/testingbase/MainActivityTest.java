@@ -1,5 +1,6 @@
 package com.teamtreehouse.testingbase;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -10,8 +11,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Shadows;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowIntent;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by chrisgaona on 12/12/17.
@@ -53,7 +58,22 @@ public class MainActivityTest {
 
         // assert
         // get background color from linearLayout
-        int expectedColor = ((ColorDrawable) mMainActivity.linearLayout.getBackground()).getColor();
-        assertEquals(givenColor, expectedColor);
+        int actualColor = ((ColorDrawable) mMainActivity.linearLayout.getBackground()).getColor();
+        assertEquals(givenColor, actualColor);
+    }
+
+    @Test
+    public void buttonLaunchesOtherActivity() throws Exception {
+        // arrange
+        Class clazz = OtherActivity.class;
+        Intent expectedIntent = new Intent(mMainActivity, clazz);
+
+        // act
+        mMainActivity.launchActivityButton.callOnClick();
+
+        // assert
+        // check that startActivity is called with correct intent
+        Intent actualIntent = Shadows.shadowOf(mMainActivity).getNextStartedActivity();
+        assertTrue(expectedIntent.filterEquals(actualIntent));
     }
 }
