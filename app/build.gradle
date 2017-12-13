@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -24,5 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     testCompile "org.mockito:mockito-core:1.+"
-    testCompile 'org.robolectric:robolectric:3.1'
+    testImplementation "org.robolectric:robolectric:3.5.1"
 }
